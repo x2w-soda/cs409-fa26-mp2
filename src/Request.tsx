@@ -9,7 +9,7 @@ const api = axios.create({
 export default function DataProvider({ children }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +41,7 @@ export default function DataProvider({ children }) {
         );
 
         const responses = await Promise.all(requests);
-        const data = responses.map((response) => response.data)
+        const data: any = responses.map((response) => response.data)
 
         console.log("JSON", data)
         setData(data);

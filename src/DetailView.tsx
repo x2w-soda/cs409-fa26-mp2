@@ -7,16 +7,16 @@ import { useNavigate } from 'react-router-dom';
 function PokeTitle({ pokemon }) {
 
   const navigate = useNavigate();
-  const navNext = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const id = pokemon.id + 1;
+  const navNext = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    let id: number = pokemon.id + 1;
     if (id > 50)
-        id = 50;
+        id = 1;
     navigate(`/detail/${id}`);
   };
-  const navPrev = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const id = pokemon.id - 1;
+  const navPrev = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    let id: number = pokemon.id - 1;
     if (id < 1)
-        id = 1;
+        id = 50;
     navigate(`/detail/${id}`);
   };
 
@@ -64,10 +64,15 @@ function PokeDetails({ pokemon }) {
 
 export default function DetailView() {
   const { id } = useParams();
-  const data = useData();
+  const data: any = useData();
+  if (!data) {
+      return (
+          <h1>ID Unavailable</h1>
+      )
+  }
+
   const item = data.find(item => item.id == id)
 
-  console.log("DetailView", typeof item, item)
   if (!item) {
       return (
           <h1>ID Unavailable</h1>

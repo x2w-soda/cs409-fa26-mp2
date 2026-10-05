@@ -7,7 +7,7 @@ export default function ListView() {
   const [asc, setAsc] = useState(true);
   const [key, setKey] = useState(0);
 
-  const data = useData();
+  const data: any = useData();
   if (!data) {
       return (<h1>Data Unavailable</h1>)
   }

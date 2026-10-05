@@ -1,7 +1,3 @@
-import { useState, useEffect } from 'react'
-
-const imageCache = new Map();
-
 export default function PokeImage({id}) {
     if (!id)
         return (

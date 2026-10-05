@@ -8,13 +8,13 @@ export default function GalleryView() {
   const [asc, setAsc] = useState(true);
   const [key, setKey] = useState(0);
 
-  const data = useData();
+  const data: any = useData();
   if (!data) {
       return (<h1>Data Unavailable</h1>)
   }
 
   const items = useMemo(() => {
-      const query = filterText.trim().toLowerCase();
+      const query: string = filterText.trim().toLowerCase();
       let filtered = data;
       if (query)
           filtered = data.filter((item) => item.name.toLowerCase().includes(query));
