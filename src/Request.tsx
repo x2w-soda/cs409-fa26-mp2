@@ -3,7 +3,7 @@ import axios from "axios";
 
 const DataContext = createContext(null);
 const api = axios.create({
-  baseURL: "https://api.artic.edu/api/v1",
+  baseURL: "https://pokeapi.co/api/v2/pokemon",
 });
 
 export default function DataProvider({ children }) {
@@ -14,27 +14,40 @@ export default function DataProvider({ children }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("/artworks", {
+          /*
+        const response = await api.get("/", {
           params: {
-            page: 1,
             limit: 10,
             fields: [
               "id",
-              "title",
-              "artist_display",
-              "date_display",
-              "image_id",
+              "name",
+              "sprites",
             ].join(","),
           },
         });
+        */
 
-        const data = response.data;
+        const requests = Array.from({ length: 50 }, (_, index) =>
+          api.get(`/${index + 1}`, {
+              params: {
+                limit: 50,
+                fields: [
+                  "id",
+                  "name",
+                  "sprites",
+                ].join(","),
+              },
+          })
+        );
+
+        const responses = await Promise.all(requests);
+        const data = responses.map((response) => response.data)
 
         console.log("JSON", data)
         setData(data);
         return data;
       } catch (err) {
-        setError("Failed to load AIC data.");
+        setError("Failed to load Pokemon data.");
         console.error(err);
       } finally {
         setLoading(false);

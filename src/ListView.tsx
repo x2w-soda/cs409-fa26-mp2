@@ -14,15 +14,15 @@ export default function ListView() {
 
   const items = useMemo(() => {
       const query = filterText.trim().toLowerCase();
-      let filtered = data.data;
+      let filtered = data;
       if (query)
-          filtered = data.data.filter((item) => item.title.toLowerCase().includes(query));
+          filtered = data.filter((item) => item.name.toLowerCase().includes(query));
 
       const sorted = filtered.toSorted((lhs, rhs) => {
           if (key == 0) // sort by key
               return asc ? (rhs.id - lhs.id) : (lhs.id - rhs.id);
-          // sort by title text
-          return asc ? (rhs.title.localeCompare(lhs.title)) : (lhs.title.localeCompare(rhs.title));
+          // sort by name text
+          return asc ? (rhs.name.localeCompare(lhs.name)) : (lhs.name.localeCompare(rhs.name));
       });
 
       return sorted;
@@ -32,12 +32,12 @@ export default function ListView() {
   return (
     <>
       <h1> List View </h1>
-      <div>
+      <div className="filter-buttons">
         <button onClick={() => setKey(0)}>
           Sort by ID
         </button>
         <button onClick={() => setKey(1)}>
-          Sort by Title
+          Sort by Name
         </button>
         <button onClick={() => setAsc((value) => !value)}>
           Sort {asc ? "Descending" : "Ascending"}
@@ -50,8 +50,7 @@ export default function ListView() {
       </div>
       <div className="List">
         {items.map(item => (<div>
-            <h3><Link to={`/detail/${item.id}`}>{item.title}</Link></h3>
-            <h4>{item.id}</h4>
+            <h3><Link to={`/detail/${item.id}`}>{item.name} ({item.id})</Link></h3>
           </div>))}
       </div>
     </>
