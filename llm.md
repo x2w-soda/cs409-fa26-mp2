@@ -60,6 +60,43 @@ Give me a GalleryView component that organizes the JSON data into a grid of cell
 
 ## Response
 
+Here’s a GalleryView component that takes the PokeAPI results array as a prop and displays the Pokémon names in a responsive grid.
+
+```
+function GalleryView({ pokemon }) {
+  return (
+    <div className="gallery-grid">
+      {pokemon.map((poke) => (
+        <div className="gallery-cell" key={poke.name}>
+          {poke.name}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default GalleryView;
+```
+
+You can add some basic CSS:
+
+```css
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.gallery-cell {
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  background: #f8f8f8;
+  text-transform: capitalize;
+}
+```
+
 ## Prompt
 
 Give me a react component that displays the Pokemon's height, weight, and abilities in a table.
